@@ -43,6 +43,7 @@ class Login(APIView):
             # response = render(request, 'main.html')
             # response.set_cookie('email', email)
             # return response
+
             return render(request, 'main.html')
 
         else:

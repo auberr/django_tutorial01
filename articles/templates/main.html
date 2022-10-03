@@ -144,7 +144,14 @@
           <span class="material-symbols-outlined">send</span> -->
         </div>
         <div>
-          <span class="material-symbols-outlined">bookmark</span>
+          <span id="bookmark_{{ feed.id }}" feed_id="{{ feed.id }}" class="bookmark material-icons-outlined" style="cursor: pointer">
+            {% if feed.is_marked %}
+            bookmark
+            {% else %}
+            bookmark_border
+            {% endif %}
+            </span>
+          <!-- <span class="material-symbols-outlined">bookmark</span> -->
         </div>
       </div>
       <div style="margin: 0 10px; text-align: left; font-size: 14px;">김철수 <b>외 {{ feed.like_count }}명</b>이 좋아합니다.</div>
@@ -311,6 +318,36 @@
 <script>
   alert('{{ user.nickname }}')
 
+  $(".bookmark").click(function (event){
+    let feed_id = event.target.attributes.getNamedItem('feed_id').value;
+    let bookmark_id = event.target.id;
+    let bookmark_text = $.trim($('#'+bookmark_id).html())
+    if(bookmark_text == 'bookmark'){
+      $('#'+bookmark_id).html('bookmark_border');
+    } else{
+      $('#' + bookmark_id).html('bookmark');
+    }
+
+    $.ajax({
+        url: "/articles/bookmark",
+        data: {
+              feed_id: feed_id,
+              bookmark_text: bookmark_text,
+          },
+        method: "POST",
+        success: function (data){
+          console.log("성공");
+        },
+        error : function (request, status, error){
+          console.log('에러')
+        },
+        complete: function(){
+          console.log("완료");
+        }
+      })
+  })
+
+
   $(".favorite").click(function (event){
     let feed_id = event.target.attributes.getNamedItem('feed_id').value;
     let favorite_id = event.target.id;
@@ -340,8 +377,6 @@
           console.log("완료");
         }
       })
-
-
   })
 
   $(".upload_reply").click(function (event){
