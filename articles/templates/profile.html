@@ -50,7 +50,6 @@
         background: rgba(0, 0, 0, 0.8);
         backdrop-filter: blur(1.5px);
         -webkit-backdrop-filter: blur(1.5px);
-        z-index: 1000;
     }
 
     .modal_window {
@@ -74,7 +73,7 @@
     {{ user.name }}
     {{ user.profile_img }}
   </div> -->
-  <nav class="navbar navbar-expand-lg bg-light" style="position: fixed; width: 100%; z-index: 999;" >
+  <nav class="navbar navbar-expand-lg bg-light" style="position: fixed; width: 100%" >
         <div class="container-fluid" style="justify-content : space-between; flex-wrap: nowrap; min-width: 1000px" >
           <a class="navbar-brand" href="/articles/main"><img style="width: 100px" src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/2a/Instagram_logo.svg/800px-Instagram_logo.svg.png?20160616034027" alt=""></a>
             <input class="form-control me-2" style="width: 400px" type="search" placeholder="Search" aria-label="Search">
@@ -104,133 +103,30 @@
 
 
 <div style="display: flex; flex-direction: row; text-align: center; justify-content: center; padding-top: 60px; background:#FAFAFA;">
-    <div style="width: 500px; min-width: 500px; margin-right:285px; ">
-<!-- 피드 시작 -->
-{% for feed in feed_list %}
-    <div style="border: solid 1px black; background-color: white; margin: 20px 0;">
-      <div style="display:flex; flex-direction: row; align-items: center; margin: 20px;">
-      <div class="box" style="background: #BDBDBD; width: 50px; height: 50px; object-fit:contain;">
-        <img class="profile" src="{% get_media_prefix %}{{ feed.profile_image }}">
-      </div>
-        <div>
-          {{ feed.nickname }}
+    <div style="padding : 20px 60px">
+        <div class="box" style="width: 175px; height: 175px;">
+            <img class="profile" src="{% get_media_prefix %}{{ user.profile_img }}" alt="">
         </div>
-      </div>
-      <div><img style="width:100%" src="{% get_media_prefix %}{{ feed.image }}" alt=""></div>
-      <div style="display: flex; flex-direction: row; justify-content: space-between;">
-        <div>
-          <span class="material-symbols-outlined">favorite</span>
-          <span class="material-symbols-outlined">mode_comment</span>
-          <span class="material-symbols-outlined">send</span>
+    </div>
+    <div style="text-align: left;">
+        <div style="display: flex; flex-direction: row; margin: 20px 0;">
+            <div style="font-size: 26px; margin-right: 40px;">
+                {{ user.nickname }}
+            </div>
+            <button id="button_profile_upload" style="margin-right: 40px;">프로필 편집</button>
+            <input type="file" id="input_fileupload" onchange="profile_upload();" style="display:none;"/>
+            <span id="nav_bar_add_box" class="material-symbols-outlined" style="margin-right: 10px;">settings</span>
+        </div>
+        <div style="margin-bottom: 20px">
+            게시물 내 게시물 건수 팔로워 111 팔로잉 111
         </div>
         <div>
-          <span class="material-symbols-outlined">bookmark</span>
-        </div>
-      </div>
-      <div style="margin: 0 10px; text-align: left; font-size: 14px;">김철수 <b>외 {{ feed.like_count }}명</b>이 좋아합니다.</div>
-      <div style="margin: 0 10px; text-align: left; font-size: 16px;"><b>{{ feed.user_id }}</b> {{ feed.content }}</div>
-<!-- 
-      {% for reply in feed.reply_list %}
-
-        <div style="margin: 0 10px; text-align: left; font-size: 16px;"><b>{{ reply.nickname }}</b>{{ reply.content}}</div>
-
-      {% endfor %} -->
-      
-      <div style="border-top:1px solid gray;">
-        <input type="email" class="form-control" style="box-shadow:none; border:none; outline: none;" placeholder="댓글 달기.."></div>
-    </div>
-    {% endfor %}
-  </div>
-  
-<!-- 피드끝 -->
-
-  <div style="width: 400px; height: 1000px; position: fixed; left: 62%;">
-    <div style="display:flex; flex-direction: row; align-items: center; margin: 0 10px;">
-        <div class="box" style="background: #BDBDBD; width: 50px; height: 50px; object-fit:contain;">
-          <img class="profile" src="{% get_media_prefix %}{{ user.profile_img }}">
-        </div>
-          <div style="margin-left: 10px; text-align: left;">
-            <div style="font-weight: bold;">
-              {{ user.nickname }}
-            </div>
-            <div style="color:gray">
-              {{ user.name }}
-            </div>
-          </div>
-    </div>
-    <div style="display: flex; flex-direction: row; justify-content: space-between; margin-top: 20px;">
-        <div style="font-weight: bold; color: gray;">
-            회원님을 위한 추천
-        </div>
-        <div>
-            <a href="#" style="font-weight: bold; color:black;text-decoration: none;">모두 보기</a> 
+            <b>{{ user.name }}</b> 
         </div>
     </div>
-    <div>
-        <div style="display:flex; flex-direction: row;justify-content: space-between; align-items: center; margin: 10px;">
-            <div style="display: flex; flex-direction: row;">
-                <div class="box" style="background: #BDBDBD; width: 35px; height: 35px; object-fit:contain;">
-                    <img class="profile" src="https://item.kakaocdn.net/do/d84248170c2c52303db27306a00fb861f604e7b0e6900f9ac53a43965300eb9a">
-                  </div>
-                    <div style="margin-left: 10px; text-align: left;">
-                      <div style="font-weight: bold; font-size:14px;">
-                          abcabcab
-                      </div>
-                      <div style="color:gray">
-                          sparta 님 외 10명을 팔로우합니다
-                      </div>
-                    </div>
-            </div>
-            <div>
-                <a href="#" style="font-size: 14px; font-weight: bold; text-decoration: none;">팔로우</a>
-            </div>
-        </div>
-    </div>
-    <div>
-        <div style="display:flex; flex-direction: row;justify-content: space-between; align-items: center; margin: 10px;">
-            <div style="display: flex; flex-direction: row;">
-                <div class="box" style="background: #BDBDBD; width: 35px; height: 35px; object-fit:contain;">
-                    <img class="profile" src="https://item.kakaocdn.net/do/d84248170c2c52303db27306a00fb861f604e7b0e6900f9ac53a43965300eb9a">
-                  </div>
-                    <div style="margin-left: 10px; text-align: left;">
-                      <div style="font-weight: bold; font-size:14px;">
-                          abcabcab
-                      </div>
-                      <div style="color:gray">
-                          sparta 님 외 10명을 팔로우합니다
-                      </div>
-                    </div>
-            </div>
-            <div>
-                <a href="#" style="font-size: 14px; font-weight: bold; text-decoration: none;">팔로우</a>
-            </div>
-        </div>
-    </div>
-    <div>
-        <div style="display:flex; flex-direction: row;justify-content: space-between; align-items: center; margin: 10px;">
-            <div style="display: flex; flex-direction: row;">
-                <div class="box" style="background: #BDBDBD; width: 35px; height: 35px; object-fit:contain;">
-                    <img class="profile" src="https://item.kakaocdn.net/do/d84248170c2c52303db27306a00fb861f604e7b0e6900f9ac53a43965300eb9a">
-                  </div>
-                    <div style="margin-left: 10px; text-align: left;">
-                      <div style="font-weight: bold; font-size:14px;">
-                          abcabcab
-                      </div>
-                      <div style="color:gray">
-                          sparta 님 외 10명을 팔로우합니다
-                      </div>
-                    </div>
-            </div>
-            <div>
-                <a href="#" style="font-size: 14px; font-weight: bold; text-decoration: none;">팔로우</a>
-            </div>
-        </div>
-    </div>
-    <div style="margin-top: 40px; font-size: 12px; color: gray; text-align: left">소개 도움말 홍보센터 API <br>개인정보처리방침 약관 위치 인기 계정 해시태그 언어</div>
-    <div style="margin-top: 20px; font-size: 12px; color: gray; text-align: left">2021 인스타그램 프롬 페이스북</div>
-
-  </div>
 </div>
+
+
 
 <!-- 첫번째 모달 -->
 <div id="first_modal" class="modal_overlay">
@@ -296,6 +192,7 @@
       display: 'none'
     });
   });
+
 
   let files;
   
@@ -364,7 +261,7 @@
       let content = $('#input_feed_content').val();
       // let user_id = "{{ user.nickname }}";
       // let profile_image = "{{ user.profile_img }}";
-      
+
       let fd = new FormData();
 
       fd.append('file', file);
@@ -389,7 +286,7 @@
         },
         complete: function(){
           console.log("완료");
-          location.replace("/articles/main");
+          location.replace("/main");
         }
       })
     });
@@ -409,6 +306,43 @@
     }
 
 }
+
+    
+    $('#button_profile_upload').click(function(){
+        $('#input_fileupload').click();
+    });
+
+    function profile_upload(){
+
+      let file = $('#input_fileupload')[0].files[0];
+      let email = "{{ user.email }}";
+
+      let fd = new FormData();
+
+      fd.append('file', file);
+      fd.append('email', email);
+
+      $.ajax({
+        url: "/user/profile/upload",
+        data: fd, 
+        method: "POST",
+        processData: false,
+        contentType: false,
+
+        success: function (data){
+          console.log("성공");
+        },
+        error : function (request, status, error){
+          console.log('에러')
+        },
+        complete: function(){
+          console.log("완료");
+          location.replace("/articles/profile");
+        }
+      })
+
+    }
+
 
 
 </script>

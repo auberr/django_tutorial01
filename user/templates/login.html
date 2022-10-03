@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>로그인</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
+ 
+    <!-- Jquery -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+
+
+</head>
+  <body style="background: #FAFAFA;">
+    <div style="display: flex; flex-direction: column; align-items: center; width: 100%;">
+        <div style="padding: 20px; text-align:center; border: solid 1px rgba(219, 219, 219, 1); width: 300px; height: 300px; margin-top: 30px; background: white;">
+            <div style="padding-bottom:10px;"><img style="width: 150px" src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/2a/Instagram_logo.svg/800px-Instagram_logo.svg.png?20160616034027" alt=""> </div>
+            <div style="font-weight: bold; color: gray; padding-bottom: 20px;"> 친구들의 사진과 동영상을 보려면 가입하세요</div>
+            <div> 
+                <div class="form-floating mb-3">
+                    <input type="email" class="form-control" style="font-size: 14px; height: 24px;" id="input_email" placeholder="name@example.com">
+                    <label for="floatingInput" style="font-size: 14px; padding: 4px 10px;">이메일 주소</label>
+                </div>
+            </div>
+            <div> 
+                <div class="form-floating mb-3">
+                    <input type="password" class="form-control" style="font-size: 14px; height: 24px;" id="input_password" placeholder="name@example.com">
+                    <label for="floatingInput" style="font-size: 14px; padding: 4px 10px;">비밀번호</label>
+                </div>
+            </div>
+            <button id="login_button" class="btn btn-primary" style="width:100%">로그인</button>
+        </div>
+        <div style="padding: 20px; text-align:center; border: solid 1px rgba(219, 219, 219, 1); width: 300px; height: 70px; margin-top: 30px; background: white;">
+            <div> 계정이 없으신가요? <a href="{% url 'join' %}">가입하기</a> </div>
+        </div>
+    </div>
+
+
+    <script>
+
+        $('#login_button').click(function(){
+    
+          let email = $('#input_email').val();
+          let password = $('#input_password').val();
+          
+        console.log(email, password);
+    
+        $.ajax({
+            url: "/user/login/",
+            data: {
+                email: email,
+                password: password,
+            },
+            method: "POST",
+    
+            success: function (data){
+              alert("로그인 성공")
+              location.replace('/articles/main');
+            },
+            error : function (request, status, error){
+              alert("로그인 실패")
+              location.replace('/articles/main');
+            },
+            complete: function(){
+              console.log("완료");
+            }
+          })
+        });
+    
+    
+        </script>
+    
+    
+
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-u1OknCvxWvY5kfmNBILK2hRnQC3Pr17a+RTT6rIHI7NnikvbZlHgTPOOmMi466C8" crossorigin="anonymous"></script>
+  </body>
+</html>
