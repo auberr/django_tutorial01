@@ -32,6 +32,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    # Django App
     'articles',
     'user',
 
@@ -41,6 +42,9 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+
+    # # Third App
+    # 'django_pydenticon',  # django_pydenticon 추가
 ]
 
 MIDDLEWARE = [
@@ -136,3 +140,7 @@ MEDIA_URL = '/media/' # 항상 / 로 끝나도록 설정
 
 # 업로드된 파일을 저장할 디렉토리 경로
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+# 브라우저를 닫아도 세션기록 유지!
+ACCOUNT_SESSION_REMEMBER = True
+SESSION_COOKIE_AGE = 300 # 쿠키를 5분 저장 [ 세션]
